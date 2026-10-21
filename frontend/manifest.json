@@ -1,0 +1,21 @@
+
+{
+  "id": "/",
+  "name": "PrivateChat",
+  "short_name": "PrivateChat",
+  "description": "Private messaging and chat application",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
