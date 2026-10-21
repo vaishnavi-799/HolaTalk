@@ -1,4 +1,10 @@
 require('dotenv').config();
+console.log('Starting PrivateChat...');
+console.log('Node version:', process.version);
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('MONGO_URI configured:', Boolean(process.env.MONGO_URI));
+console.log('JWT_SECRET configured:', Boolean(process.env.JWT_SECRET));
+console.log('PORT:', process.env.PORT || 'default');
 const path = require('path'), fs = require('fs'), crypto = require('crypto'), http = require('http');
 const express = require('express'), { Server } = require('socket.io'), mongoose = require('mongoose');
 const bcrypt = require('bcrypt'), jwt = require('jsonwebtoken'), cookie = require('cookie');
@@ -215,17 +221,20 @@ io.on('connection', s => {
 const port = Number(PORT);
 
 server.listen(port, '0.0.0.0', async () => {
+  console.log(`HTTP server listening on port ${port}`);
+
   try {
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(MONGO_URI, {
+      serverSelectionTimeoutMS: 15000
+    });
 
     console.log('MongoDB connected successfully');
-    console.log(`PrivateChat server running on port ${port}`);
   } catch (err) {
-    console.error('MongoDB connection failed:', err.message);
+    console.error('MongoDB connection failed:', err);
     process.exit(1);
   }
 });
 
 server.on('error', (err) => {
-  console.error('Server startup error:', err.message);
+  console.error('Server startup error:', err);
 });
