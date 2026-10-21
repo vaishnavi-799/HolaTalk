@@ -212,15 +212,20 @@ io.on('connection', s => {
   });
 });
 
-mongoose.connect(MONGO_URI, { serverSelectionTimeoutMS: 5000 })
-  .then(() => {
-    const port = process.env.PORT || 3000;
+const port = Number(PORT);
 
-    server.listen(port, '0.0.0.0', () => {
-      console.log(`PrivateChat listening on 0.0.0.0:${port}`);
-    });
-  })
-  .catch(e => {
-    console.error('MongoDB connection failed:', e.message);
+server.listen(port, '0.0.0.0', async () => {
+  try {
+    await mongoose.connect(MONGO_URI);
+
+    console.log('MongoDB connected successfully');
+    console.log(`PrivateChat server running on port ${port}`);
+  } catch (err) {
+    console.error('MongoDB connection failed:', err.message);
     process.exit(1);
-  });
+  }
+});
+
+server.on('error', (err) => {
+  console.error('Server startup error:', err.message);
+});
