@@ -1,0 +1,20 @@
+# Environment secrets
+.env
+.env.*
+
+# Keep the example template
+!.env.example
+
+# Dependencies
+node_modules/
+
+# User uploads
+uploads/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS and editor files
+.DS_Store
+.vscode/
